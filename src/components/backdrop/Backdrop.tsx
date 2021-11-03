@@ -12,7 +12,7 @@ import {
 } from 'react-native-gesture-handler';
 
 // Components
-import { BlurView } from 'expo-blur';
+import { BlurView } from '@react-native-community/blur';
 
 // Utils
 import { styles } from './styles';
@@ -104,8 +104,8 @@ const BackdropComponent = () => {
     >
       <AnimatedBlurView
         // @ts-ignore
-        intensity={100}
-        tint="default"
+        blurAmount={100}
+        blurType="regular"
         style={[styles.container, animatedContainerStyle]}
       >
         <Animated.View
