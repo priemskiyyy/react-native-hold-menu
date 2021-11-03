@@ -115,6 +115,18 @@ export type HoldItemProps = {
    * closeOnTap={true}
    */
   closeOnTap?: boolean;
+
+  /**
+   * Optional handler to be called when menu opens
+   * @type () => void
+   */
+  onOpen?: () => void;
+
+  /**
+   * Optional handler to be called when menu closes
+   * @type () => void
+   */
+  onClose?: () => void;
 };
 
 export type GestureHandlerProps = {

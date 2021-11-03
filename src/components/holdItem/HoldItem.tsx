@@ -65,6 +65,8 @@ const HoldItemComponent = ({
   hapticFeedback,
   actionParams,
   closeOnTap,
+  onOpen,
+  onClose,
   children,
 }: HoldItemProps) => {
   //#region hooks
@@ -280,6 +282,7 @@ const HoldItemComponent = ({
     },
     onFinish: (_, context) => {
       context.didMeasureLayout = false;
+      runOnJS(onOpen)();
       if (isHold) {
         scaleBack();
       }
@@ -364,6 +367,7 @@ const HoldItemComponent = ({
     () => state.value,
     _state => {
       if (_state === CONTEXT_MENU_STATE.END) {
+        runOnJS(onClose)();
         isActive.value = false;
       }
     }
