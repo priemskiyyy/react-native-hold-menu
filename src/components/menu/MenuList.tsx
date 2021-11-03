@@ -51,7 +51,7 @@ const MenuListComponent = () => {
       menuProps.value.items.length,
       itemsWithSeparator.length
     );
-  }, [menuProps]);
+  }, [menuProps, menuProps.value.items.length]);
   const prevList = useSharedValue<MenuItemProps[]>([]);
 
   const messageStyles = useAnimatedStyle(() => {
