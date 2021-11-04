@@ -93,19 +93,20 @@ export type HoldItemProps = {
   /**
    * Set if you'd like to enable haptic feedback on activation
    * @type string
-   * @default 'Medium'
+   * @default 'impactMedium'
    * @examples
-   * hapticFeedback="None"
+   * hapticFeedback="none"
    */
   hapticFeedback?:
-    | 'None'
-    | 'Selection'
-    | 'Light'
-    | 'Medium'
-    | 'Heavy'
-    | 'Success'
-    | 'Warning'
-    | 'Error';
+    | 'enabled'
+    | 'none'
+    | 'selection'
+    | 'impactLight'
+    | 'impactMedium'
+    | 'impactHeavy'
+    | 'notificationSuccess'
+    | 'notificationWarning'
+    | 'notificationError';
 
   /**
    * Set true if you want to close menu when tap to HoldItem

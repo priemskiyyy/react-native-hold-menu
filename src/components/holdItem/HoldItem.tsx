@@ -27,7 +27,11 @@ import Animated, {
 //#region dependencies
 import { Portal } from '@gorhom/portal';
 import { nanoid } from 'nanoid/non-secure';
-// import * as Haptics from 'expo-haptics';
+// Optional Haptic Feedback
+let ReactNativeHaptic: any;
+try {
+  ReactNativeHaptic = require('react-native-haptic-feedback').default;
+} catch (error) {}
 //#endregion
 
 //#region utils & types
@@ -104,23 +108,13 @@ const HoldItemComponent = ({
 
   //#region functions
   const hapticResponse = () => {
-    // const style = !hapticFeedback ? 'Medium' : hapticFeedback;
-    // switch (style) {
-    //   case `Selection`:
-    //     Haptics.selectionAsync();
-    //     break;
-    //   case `Light`:
-    //   case `Medium`:
-    //   case `Heavy`:
-    //     Haptics.impactAsync(Haptics.ImpactFeedbackStyle[style]);
-    //     break;
-    //   case `Success`:
-    //   case `Warning`:
-    //   case `Error`:
-    //     Haptics.notificationAsync(Haptics.NotificationFeedbackType[style]);
-    //     break;
-    //   default:
-    // }
+    const haptic =
+      !hapticFeedback || hapticFeedback === 'enabled'
+        ? 'impactMedium'
+        : hapticFeedback;
+    ReactNativeHaptic.trigger(haptic, {
+      enableVibrateFallback: false,
+    });
   };
   //#endregion
 
@@ -204,8 +198,10 @@ const HoldItemComponent = ({
       state.value = CONTEXT_MENU_STATE.ACTIVE;
       isActive.value = true;
       scaleBack();
-      if (hapticFeedback !== 'None') {
-        runOnJS(hapticResponse)();
+      if (hapticFeedback !== 'none') {
+        if (ReactNativeHaptic) {
+          runOnJS(hapticResponse)();
+        }
       }
     }
 
