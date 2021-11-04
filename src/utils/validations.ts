@@ -12,8 +12,6 @@ function fieldAreSame(obj1: MenuItemProps, obj2: MenuItemProps) {
     const val2 = obj2[key];
 
     if (val1 !== val2) {
-      if (typeof val1 === 'function' && typeof val2 === 'function')
-        return val1.toString() === val2.toString();
       return false;
     }
 
