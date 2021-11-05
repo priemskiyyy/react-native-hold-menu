@@ -1,4 +1,4 @@
-import React, { forwardRef, memo, useMemo } from 'react';
+import React, { forwardRef, memo, useImperativeHandle, useMemo } from 'react';
 import { View, ViewProps } from 'react-native';
 
 //#region reanimated & gesture handler
@@ -59,7 +59,11 @@ import { useInternal } from '../../hooks';
 
 type Context = { didMeasureLayout: boolean };
 
-const HoldItemComponent = forwardRef<View, HoldItemProps>(
+type HoldItemHandle = {
+  closeMenu: () => void;
+};
+
+const HoldItemComponent = forwardRef<HoldItemHandle, HoldItemProps>(
   (
     {
       items,
@@ -283,7 +287,7 @@ const HoldItemComponent = forwardRef<View, HoldItemProps>(
       },
       onFinish: (_, context) => {
         context.didMeasureLayout = false;
-        runOnJS(onOpen)();
+        onOpen && runOnJS(onOpen)();
         if (isHold) {
           scaleBack();
         }
@@ -293,6 +297,10 @@ const HoldItemComponent = forwardRef<View, HoldItemProps>(
     const closeMenu = () => {
       state.value = CONTEXT_MENU_STATE.END;
     };
+
+    useImperativeHandle(ref, () => ({
+      closeMenu,
+    }));
 
     const overlayGestureEvent = useAnimatedGestureHandler<
       TapGestureHandlerGestureEvent,
@@ -372,7 +380,7 @@ const HoldItemComponent = forwardRef<View, HoldItemProps>(
       () => state.value,
       _state => {
         if (_state === CONTEXT_MENU_STATE.END) {
-          runOnJS(onClose)();
+          onClose && runOnJS(onClose)();
           isActive.value = false;
         }
       }
