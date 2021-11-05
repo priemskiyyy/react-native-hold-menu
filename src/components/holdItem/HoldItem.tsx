@@ -307,7 +307,7 @@ const HoldItemComponent = forwardRef<HoldItemHandle, HoldItemProps>(
       Context
     >({
       onActive: _ => {
-        if (closeOnTap) closeMenu();
+        if (closeOnTap) state.value = CONTEXT_MENU_STATE.END;;
       },
     });
     //#endregion
