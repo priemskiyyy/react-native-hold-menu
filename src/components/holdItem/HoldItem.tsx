@@ -285,12 +285,16 @@ const HoldItemComponent = ({
     },
   });
 
+  const closeMenu = () => {
+    state.value = CONTEXT_MENU_STATE.END;
+  };
+
   const overlayGestureEvent = useAnimatedGestureHandler<
     TapGestureHandlerGestureEvent,
     Context
   >({
     onActive: _ => {
-      if (closeOnTap) state.value = CONTEXT_MENU_STATE.END;
+      if (closeOnTap) closeMenu();
     },
   });
   //#endregion
