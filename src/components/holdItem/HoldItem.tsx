@@ -1,5 +1,5 @@
 import React, { forwardRef, memo, useImperativeHandle, useMemo } from 'react';
-import { View, ViewProps } from 'react-native';
+import { Keyboard, View, ViewProps } from 'react-native';
 
 //#region reanimated & gesture handler
 import {
@@ -287,6 +287,7 @@ const HoldItemComponent = forwardRef<HoldItemHandle, HoldItemProps>(
       },
       onFinish: (_, context) => {
         context.didMeasureLayout = false;
+        Keyboard.dismiss();
         onOpen && runOnJS(onOpen)();
         if (isHold) {
           scaleBack();
@@ -307,7 +308,7 @@ const HoldItemComponent = forwardRef<HoldItemHandle, HoldItemProps>(
       Context
     >({
       onActive: _ => {
-        if (closeOnTap) state.value = CONTEXT_MENU_STATE.END;;
+        if (closeOnTap) state.value = CONTEXT_MENU_STATE.END;
       },
     });
     //#endregion
