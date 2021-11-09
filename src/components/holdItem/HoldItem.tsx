@@ -287,7 +287,7 @@ const HoldItemComponent = forwardRef<HoldItemHandle, HoldItemProps>(
       },
       onFinish: (_, context) => {
         context.didMeasureLayout = false;
-        Keyboard.dismiss();
+        runOnJS(Keyboard.dismiss)();
         onOpen && runOnJS(onOpen)();
         if (isHold) {
           scaleBack();
