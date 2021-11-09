@@ -277,6 +277,7 @@ const HoldItemComponent = forwardRef<HoldItemHandle, HoldItemProps>(
           }
 
           if (!isActive.value) {
+            runOnJS(Keyboard.dismiss)();
             if (isHold) {
               scaleHold();
             } else {
@@ -287,7 +288,6 @@ const HoldItemComponent = forwardRef<HoldItemHandle, HoldItemProps>(
       },
       onFinish: (_, context) => {
         context.didMeasureLayout = false;
-        runOnJS(Keyboard.dismiss)();
         onOpen && runOnJS(onOpen)();
         if (isHold) {
           scaleBack();
