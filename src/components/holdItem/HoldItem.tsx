@@ -31,7 +31,9 @@ import { nanoid } from 'nanoid/non-secure';
 let ReactNativeHaptic: any;
 try {
   ReactNativeHaptic = require('react-native-haptic-feedback').default;
-} catch (error) {}
+} catch (error) {
+  // swallow
+}
 //#endregion
 
 //#region utils & types
@@ -168,9 +170,9 @@ const HoldItemComponent = forwardRef<HoldItemHandle, HoldItemProps>(
 
           tY = topTransform > height ? height - topTransform : 0;
         } else {
-          const bototmTransform = itemRectY.value - menuHeight;
+          const bottomTransform = itemRectY.value - menuHeight;
           tY =
-            bototmTransform < 0 ? -bototmTransform + styleGuide.spacing * 2 : 0;
+            bottomTransform < 0 ? -bottomTransform + styleGuide.spacing * 2 : 0;
         }
       }
       return tY;
@@ -436,6 +438,7 @@ const HoldItemComponent = forwardRef<HoldItemHandle, HoldItemProps>(
 
     //#region render
     return (
+      // @ts-expect-error
       <View ref={ref}>
         <GestureHandler>
           <Animated.View ref={containerRef} style={containerStyle}>

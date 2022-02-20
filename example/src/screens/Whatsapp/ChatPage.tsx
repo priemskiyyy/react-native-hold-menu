@@ -7,93 +7,97 @@ import MessageItem from './MessageItem';
 import { mockWhatsAppData } from '../../utilities/data';
 import { useAppContext } from '../../hooks/useAppContext';
 import { HoldMenuFlatList } from 'react-native-hold-menu';
+import { MenuItemProps } from '../../../../src/components/menu/types';
 
 const ChatPage = () => {
   const { theme } = useAppContext();
-  const data = useMemo(() => mockWhatsAppData(1000), []);
+  const data = useMemo(() => mockWhatsAppData(100), []);
 
-  const replyMessage = useCallback((messageId: string) => {
+  const replyMessage = useCallback((messageId: string | number | undefined) => {
     Alert.alert(`[ACTION]: REPLY' ${messageId}`);
   }, []);
 
-  const copyMessage = useCallback((messageText: string) => {
-    Alert.alert(`[ACTION]: REPLY' ${messageText}`);
-  }, []);
+  const copyMessage = useCallback(
+    (messageText: string | number | undefined) => {
+      Alert.alert(`[ACTION]: REPLY' ${messageText}`);
+    },
+    []
+  );
 
-  const editMessage = useCallback((messageId: string, messageText: string) => {
-    Alert.alert(`[ACTION]: REPLY' ${messageId} - ${messageText}`);
-  }, []);
+  const editMessage = useCallback(
+    (messageText: string | number | undefined) => {
+      Alert.alert(`[ACTION]: REPLY' ${messageText}`);
+    },
+    []
+  );
 
-  const myMenu = [
-    {
-      text: 'Reply1',
-      icon: 'corner-down-left',
-      onPresss: replyMessage,
-    },
-    {
-      text: 'Copy1',
-      icon: 'copy',
-      onPress: copyMessage,
-    },
-    {
-      text: 'Edit1',
-      icon: 'home',
-      onPress: editMessage,
-    },
-    {
-      text: 'Pin1',
-      icon: 'map-pin',
-      onPress: () => {},
-    },
-    {
-      text: 'Forward1',
-      icon: 'corner-up-right',
-      onPress: () => {},
-    },
-    {
-      text: 'Delete1',
-      icon: 'trash-2',
-      onPress: () => {},
-    },
-  ];
+  const senderMenu = useMemo(
+    (): MenuItemProps[] => [
+      {
+        text: 'Reply',
+        icon: 'corner-down-left',
+        onPress: replyMessage,
+      },
+      {
+        text: 'Copy',
+        icon: 'copy',
+        onPress: copyMessage,
+      },
+      {
+        text: 'Edit',
+        icon: 'edit',
+        onPress: editMessage,
+      },
+      {
+        text: 'Forward',
+        icon: 'corner-up-right',
+        onPress: () => {},
+      },
+      {
+        text: 'Delete',
+        isDestructive: true,
+        icon: 'trash-2',
+        onPress: () => {},
+      },
+    ],
+    [replyMessage, copyMessage, editMessage]
+  );
 
-  const otherMenu = [
-    {
-      text: 'Reply',
-      icon: 'corner-down-left',
-      onPress: () => {},
-    },
-    {
-      text: 'Copy',
-      icon: 'copy',
-      onPress: copyMessage,
-    },
-    {
-      text: 'Pin',
-      icon: 'map-pin',
-      onPress: () => {},
-    },
-    {
-      text: 'Forward',
-      icon: 'corner-up-right',
-      onPress: () => {},
-    },
-    {
-      text: 'Delete',
-      icon: 'trash-2',
-      onPress: () => {},
-    },
-  ];
+  const receiverMenu = useMemo(
+    () => [
+      {
+        text: 'Reply',
+        icon: 'corner-down-left',
+        onPress: () => {},
+      },
+      {
+        text: 'Copy',
+        icon: 'copy',
+        onPress: copyMessage,
+      },
+      {
+        text: 'Like',
+        icon: 'thumbs-up',
+        onPress: () => {},
+      },
+      {
+        text: 'Forward',
+        icon: 'corner-up-right',
+        onPress: () => {},
+      },
+    ],
+    [copyMessage]
+  );
 
   const renderMessage = useCallback(
     ({ item }) => (
       <MessageItem
-        senderMenu={myMenu}
-        receiverMenu={otherMenu}
+        senderMenu={senderMenu}
+        receiverMenu={receiverMenu}
         message={item}
       />
     ),
-    [myMenu, otherMenu]
+    [senderMenu, receiverMenu]
   );
 
   const keyExtractor = useCallback(item => item.id.toString(), []);
@@ -115,7 +119,6 @@ const ChatPage = () => {
       contentContainerStyle={styles.contentContainer}
       windowSize={5}
       maxToRenderPerBatch={4}
-      inverted
     />
   );
 };

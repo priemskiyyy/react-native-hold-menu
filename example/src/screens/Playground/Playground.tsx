@@ -14,10 +14,6 @@ const Playground = ({}: PlaygroundProps) => {
 
   const items = [
     {
-      isTitle: true,
-      text: 'Actions',
-    },
-    {
       text: 'Home',
       icon: 'home',
       onPress: () => {
@@ -88,7 +84,7 @@ const Playground = ({}: PlaygroundProps) => {
     <View style={themeStyles.containerStyles}>
       <View style={[styles.column, styles.content]}>
         <View style={[styles.row]}>
-          <HoldItem items={items} menuAnchorPosition="bottom-left">
+          <HoldItem items={items} closeOnTap>
             <View style={themeStyles.item}>
               <View style={[themeStyles.dot, styles.bottomLeft]} />
             </View>
