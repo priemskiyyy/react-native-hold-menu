@@ -1,49 +1,30 @@
-/**
- * Metro configuration for React Native
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 const path = require('path');
-const fs = require('fs');
-const blacklist = require('metro-config/src/defaults/blacklist');
-const escape = require('escape-string-regexp');
+const extraNodeModules = {
+  'react-native-hold-menu': path.resolve(__dirname, '../src'),
+};
 
-const root = path.resolve(__dirname, '..');
-const pak = JSON.parse(
-  fs.readFileSync(path.join(root, 'package.json'), 'utf8')
-);
-
-const modules = [
-  '@babel/runtime',
-  ...Object.keys({
-    ...pak.dependencies,
-    ...pak.peerDependencies,
-  }),
-];
+const extraNodeModulesProxy = new Proxy(extraNodeModules, {
+  get: function (target, name) {
+    if (target[name]) {
+      return target[name.toString()];
+    } else {
+      return path.join(process.cwd(), `node_modules/${name.toString()}`);
+    }
+  },
+});
 
 module.exports = {
-  projectRoot: __dirname,
-  watchFolders: [root],
-
+  projectRoot: path.resolve(__dirname),
+  watchFolders: [path.resolve(__dirname, '../src')],
   resolver: {
-    blacklistRE: blacklist([
-      new RegExp(`^${escape(path.join(root, 'node_modules'))}\\/.*$`),
-    ]),
-
-    extraNodeModules: modules.reduce((acc, name) => {
-      acc[name] = path.join(__dirname, 'node_modules', name);
-      return acc;
-    }, {}),
-  },
-
-  transformer: {
-    getTransformOptions: async () => ({
-      transform: {
-        experimentalImportSupport: false,
-        inlineRequires: false,
-      },
-    }),
+    extraNodeModules: extraNodeModulesProxy,
+    transformer: {
+      getTransformOptions: async () => ({
+        transform: {
+          experimentalImportSupport: false,
+          inlineRequires: true,
+        },
+      }),
+    },
   },
 };

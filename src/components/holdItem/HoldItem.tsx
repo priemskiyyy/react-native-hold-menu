@@ -201,10 +201,10 @@ const HoldItemComponent = forwardRef<HoldItemHandle, HoldItemProps>(
       });
     };
 
-    const onCompletion = (isFinised: boolean) => {
+    const onCompletion = (isFinished: boolean) => {
       'worklet';
       const isListValid = items && items.length > 0;
-      if (isFinised && isListValid) {
+      if (isFinished && isListValid) {
         state.value = CONTEXT_MENU_STATE.ACTIVE;
         isActive.value = true;
         scaleBack();
