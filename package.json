@@ -1,5 +1,5 @@
 {
-  "name": "@bitscheme/react-native-hold-menu",
+  "name": "react-native-hold-menu",
   "version": "0.2.2",
   "description": "A performant, easy to use hold to open context menu for React Native powered by Reanimated.",
   "main": "lib/commonjs/index.js",
