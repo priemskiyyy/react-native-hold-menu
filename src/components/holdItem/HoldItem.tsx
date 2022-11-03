@@ -84,7 +84,7 @@ const HoldItemComponent = forwardRef<HoldItemHandle, HoldItemProps>(
     ref
   ) => {
     //#region hooks
-    const { state, menuProps } = useInternal();
+    const { state, menuProps,safeAreaInsets } = useInternal();
     const deviceOrientation = useDeviceOrientation();
     //#endregion
 
@@ -155,7 +155,7 @@ const HoldItemComponent = forwardRef<HoldItemHandle, HoldItemProps>(
       'worklet';
 
       const height =
-        deviceOrientation === 'portrait' ? WINDOW_HEIGHT : WINDOW_WIDTH;
+          deviceOrientation === 'portrait' ? WINDOW_HEIGHT : WINDOW_WIDTH;
 
       const isAnchorPointTop = transformOrigin.value.includes('top');
 
@@ -163,17 +163,18 @@ const HoldItemComponent = forwardRef<HoldItemHandle, HoldItemProps>(
       if (!disableMove) {
         if (isAnchorPointTop) {
           const topTransform =
-            itemRectY.value +
-            itemRectHeight.value +
-            menuHeight +
-            styleGuide.spacing * 2 +
-            10;
-
-          tY = topTransform > height ? height - topTransform : 0;
+              itemRectY.value +
+              itemRectHeight.value +
+              menuHeight +
+              styleGuide.spacing +
+              (safeAreaInsets?.bottom || 0);
+          tY = topTransform > height ? height - topTransform : itemRectY.value>0 && itemRectY.value < (safeAreaInsets?.top || 0)?(safeAreaInsets?.top || 30): itemRectY?.value < 0 ? Math.abs(itemRectY.value) +(safeAreaInsets?.top || 30)  :0;
         } else {
-          const bottomTransform = itemRectY.value - menuHeight;
+
+          const bottomTransform =
+              itemRectY.value - menuHeight - (safeAreaInsets?.top || 0);
           tY =
-            bottomTransform < 0 ? -bottomTransform + styleGuide.spacing * 2 : 0;
+              bottomTransform < 0 ? -bottomTransform + styleGuide.spacing * 2 : 0;
         }
       }
       return tY;
@@ -439,25 +440,24 @@ const HoldItemComponent = forwardRef<HoldItemHandle, HoldItemProps>(
 
     //#region render
     return (
-      // @ts-expect-error
-      <View ref={ref}>
-        <GestureHandler>
-          <Animated.View ref={containerRef} style={containerStyle}>
-            {children}
-          </Animated.View>
-        </GestureHandler>
+        <>
+          <GestureHandler>
+            <Animated.View ref={containerRef} style={containerStyle}>
+              {children}
+            </Animated.View>
+          </GestureHandler>
 
-        <Portal key={key} name={key}>
-          <Animated.View
-            key={key}
-            style={portalContainerStyle}
-            animatedProps={animatedPortalProps}
-          >
-            <PortalOverlay />
-            {children}
-          </Animated.View>
-        </Portal>
-      </View>
+          <Portal key={key} name={key}>
+            <Animated.View
+                key={key}
+                style={portalContainerStyle}
+                animatedProps={animatedPortalProps}
+            >
+              <PortalOverlay />
+              {children}
+            </Animated.View>
+          </Portal>
+        </>
     );
     //#endregion
   }

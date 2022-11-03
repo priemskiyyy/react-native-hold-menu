@@ -19,7 +19,7 @@ export interface Store {
   dispatch?: React.Dispatch<Action>;
 }
 
-export let AnimatedIcon: any;
+export let AnimatedIcon = ()=>null;
 
 const ProviderComponent = ({
   children,
@@ -28,7 +28,7 @@ const ProviderComponent = ({
   safeAreaInsets,
 }: HoldMenuProviderProps) => {
   if (iconComponent)
-    AnimatedIcon = Animated.createAnimatedComponent(iconComponent);
+    AnimatedIcon = iconComponent
 
   const state = useSharedValue<CONTEXT_MENU_STATE>(
     CONTEXT_MENU_STATE.UNDETERMINED

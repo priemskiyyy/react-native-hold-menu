@@ -12,7 +12,6 @@ import { CONTEXT_MENU_STATE, IS_IOS } from '../../constants';
 import { BORDER_LIGHT_COLOR, BORDER_DARK_COLOR } from './constants';
 import isEqual from 'lodash.isequal';
 import { getColor } from './calculations';
-import { AnimatedIcon } from '../provider/Provider';
 
 const ItemComponent = IS_IOS ? TouchableOpacity : GHTouchableOpacity;
 // @ts-ignore
@@ -64,9 +63,14 @@ const MenuItemComponent = ({ item, isLast }: MenuItemComponentProps) => {
         >
           {item.text}
         </Animated.Text>
-        {!item.isTitle && item.icon && (
-          <AnimatedIcon name={item.icon} size={18} style={textColor} />
-        )}
+        {/*{!item.isTitle && item.icon && typeof item.icon !== 'string' && (*/}
+        {/*  <AnimatedIcon name={item.icon} height={18} color={'red'} style={textColor} />*/}
+        {/*)}*/}
+        {!item.isTitle && item.icon && typeof item.icon !== 'string' && item.icon({
+          width:18,
+          height:18,
+          color:getColor(item.isTitle, item.isDestructive, theme.value)
+        })}
       </AnimatedTouchable>
       {item.withSeparator && <Separator />}
     </>

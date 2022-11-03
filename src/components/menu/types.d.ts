@@ -1,8 +1,9 @@
 import { TransformOriginAnchorPosition } from '../../utils/calculations';
+import {SVGProps} from "react";
 
 export type MenuItemProps = {
   text: string;
-  icon?: string | (() => React.ReactElement);
+  icon?: string | ((props:SVGProps<any>) => React.ReactElement);
   onPress?: (...args: any[]) => void;
   isTitle?: boolean;
   isDestructive?: boolean;
