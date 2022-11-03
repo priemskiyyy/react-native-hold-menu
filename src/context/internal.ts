@@ -7,6 +7,12 @@ export type InternalContextType = {
   state: Animated.SharedValue<CONTEXT_MENU_STATE>;
   theme: Animated.SharedValue<'light' | 'dark'>;
   menuProps: Animated.SharedValue<MenuInternalProps>;
+  safeAreaInsets?: {
+    top: number;
+    right: number;
+    bottom: number;
+    left: number;
+  };
 };
 
 // @ts-ignore

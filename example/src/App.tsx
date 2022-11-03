@@ -1,20 +1,9 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
-
-import 'react-native-gesture-handler';
-
 import React, { useState, useMemo, useCallback } from 'react';
 import { StatusBar } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 // Screens
 import Home, { ToggleThemeButton } from './screens/Home';
@@ -28,7 +17,7 @@ import Clubhouse, {
 
 // Components
 import { HoldMenuProvider } from 'react-native-hold-menu';
-import FeatherIcon from 'react-native-vector-icons/Feather';
+import FeatherIcon from '@expo/vector-icons/Feather';
 
 // Utils
 import { AppContext, IAppContext } from './context/internal';
@@ -37,6 +26,7 @@ import StyleGuide from './utilities/styleGuide';
 const Stack = createStackNavigator();
 
 const App = () => {
+  const safeAreaInsets = useSafeAreaInsets();
   const [state, setState] = useState<IAppContext>({
     theme: 'light',
     toggleTheme: () => {},
@@ -70,7 +60,11 @@ const App = () => {
         <StatusBar
           barStyle={state.theme === 'light' ? 'dark-content' : 'light-content'}
         />
-        <HoldMenuProvider iconComponent={FeatherIcon} theme={state.theme}>
+        <HoldMenuProvider
+          iconComponent={FeatherIcon}
+          theme={state.theme}
+          safeAreaInsets={safeAreaInsets}
+        >
           <NavigationContainer>
             <Stack.Navigator
               initialRouteName="Home"
