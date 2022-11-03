@@ -36,7 +36,7 @@ const MenuItemComponent = ({ item, isLast }: MenuItemComponentProps) => {
   }, [theme, isLast, item]);
 
   const textColor = useAnimatedStyle(() => {
-    return { color: getColor(item.isTitle, item.isDestructive, theme.value) };
+    return { color: getColor(item.isTitle, item.isDestructive, theme.value),...item?.textStyle };
   }, [theme, item]);
 
   const handleOnPress = useCallback(() => {
@@ -53,13 +53,14 @@ const MenuItemComponent = ({ item, isLast }: MenuItemComponentProps) => {
       <AnimatedTouchable
         onPress={handleOnPress}
         activeOpacity={!item.isTitle ? 0.4 : 1}
-        style={[styles.menuItem, borderStyles]}
+        style={[styles.menuItem, borderStyles,item?.containerStyle]}
       >
         <Animated.Text
           style={[
             item.isTitle ? styles.menuItemTitleText : styles.menuItemText,
             textColor,
           ]}
+          numberOfLines={1}
         >
           {item.text}
         </Animated.Text>
