@@ -21,13 +21,19 @@ const Icon = ({ iconComponent, name }: IconProps) => {
     iconComponent
   );
 
-  const iconProps = useAnimatedProps(() => {
-    return {
-      color: theme.value === 'light' ? 'black' : 'white',
-    };
-  }, [theme]);
+  // const iconProps = useAnimatedProps(() => {
+  //   return {
+  //     color: theme.value === 'light' ? 'black' : 'white',
+  //   };
+  // }, [theme]);
 
-  return <AnimatedIcon name={name} size={18} animatedProps={iconProps} />;
+  return (
+    <AnimatedIcon
+      name={name}
+      size={18}
+      animatedProps={theme.value === 'light' ? 'black' : 'white'}
+    />
+  );
 };
 
 export default memo(Icon);

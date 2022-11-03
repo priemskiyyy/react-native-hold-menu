@@ -43,7 +43,6 @@
   "dependencies": {
     "@gorhom/portal": "^1.0.3",
     "expo-blur": "^11.1.0",
-    "expo-haptics": "^11.2.0",
     "lodash.isequal": "^4.5.0",
     "nanoid": "^3.1.20"
   },
@@ -77,7 +76,6 @@
   },
   "peerDependencies": {
     "expo-blur": "^11.1.0",
-    "expo-haptics": "^11.2.0",
     "react": "*",
     "react-native": "*",
     "react-native-gesture-handler": ">=1.8.0",

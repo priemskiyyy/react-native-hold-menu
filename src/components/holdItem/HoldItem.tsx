@@ -10,7 +10,6 @@ import {
 } from 'react-native-gesture-handler';
 import Animated, {
   measure,
-  runOnJS,
   useAnimatedGestureHandler,
   useAnimatedProps,
   useAnimatedRef,
@@ -27,7 +26,6 @@ import Animated, {
 //#region dependencies
 import { Portal } from '@gorhom/portal';
 import { nanoid } from 'nanoid/non-secure';
-import * as Haptics from 'expo-haptics';
 //#endregion
 
 //#region utils & types
@@ -62,7 +60,6 @@ const HoldItemComponent = ({
   disableMove,
   menuAnchorPosition,
   activateOn,
-  hapticFeedback,
   actionParams,
   closeOnTap,
   children,
@@ -99,29 +96,6 @@ const HoldItemComponent = ({
   //#region refs
   const containerRef = useAnimatedRef<Animated.View>();
   //#endregion
-
-  //#region functions
-  const hapticResponse = () => {
-    const style = !hapticFeedback ? 'Medium' : hapticFeedback;
-    switch (style) {
-      case `Selection`:
-        Haptics.selectionAsync();
-        break;
-      case `Light`:
-      case `Medium`:
-      case `Heavy`:
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle[style]);
-        break;
-      case `Success`:
-      case `Warning`:
-      case `Error`:
-        Haptics.notificationAsync(Haptics.NotificationFeedbackType[style]);
-        break;
-      default:
-    }
-  };
-  //#endregion
-
   //#region worklet functions
   const activateAnimation = (ctx: any) => {
     'worklet';
@@ -204,9 +178,6 @@ const HoldItemComponent = ({
       state.value = CONTEXT_MENU_STATE.ACTIVE;
       isActive.value = true;
       scaleBack();
-      if (hapticFeedback !== 'None') {
-        runOnJS(hapticResponse)();
-      }
     }
 
     isAnimationStarted.value = false;
