@@ -79,6 +79,7 @@ const HoldItemComponent = forwardRef<HoldItemHandle, HoldItemProps>(
       closeOnTap,
       onOpen,
       onClose,
+      onWillOpen,
       children,
     }: HoldItemProps,
     ref
@@ -273,6 +274,7 @@ const HoldItemComponent = forwardRef<HoldItemHandle, HoldItemProps>(
       >({
       onActive: (_, context) => {
         if (canCallActivateFunctions()) {
+          onWillOpen && runOnJS(onWillOpen)()
           if (!context.didMeasureLayout) {
             activateAnimation(context);
             transformValue.value = calculateTransformValue();
