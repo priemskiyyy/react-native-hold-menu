@@ -168,11 +168,6 @@ const HoldItemComponent = forwardRef<HoldItemHandle, HoldItemProps>(
             menuHeight +
             styleGuide.spacing +
             (safeAreaInsets?.bottom || 0);
-
-          // TODO
-          console.log(itemRectY.value,
-            itemRectHeight.value,height,topTransform)
-          console.log(itemRectY.value + itemRectHeight.value)
           tY = itemRectHeight.value > height ? height - Math.abs(itemRectY.value + itemRectHeight.value) - menuHeight - (safeAreaInsets?.top || 50) :topTransform > height ? height - topTransform : itemRectY.value > 0 && itemRectY.value < (safeAreaInsets?.top || 0)?(safeAreaInsets?.top || 30): itemRectY?.value < 0 ? Math.abs(itemRectY.value) +(safeAreaInsets?.top || 30)  :0;
         } else {
 
