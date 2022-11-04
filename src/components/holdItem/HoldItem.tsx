@@ -155,7 +155,7 @@ const HoldItemComponent = forwardRef<HoldItemHandle, HoldItemProps>(
       'worklet';
 
       const height =
-          deviceOrientation === 'portrait' ? WINDOW_HEIGHT : WINDOW_WIDTH;
+        deviceOrientation === 'portrait' ? WINDOW_HEIGHT : WINDOW_WIDTH;
 
       const isAnchorPointTop = transformOrigin.value.includes('top');
 
@@ -163,18 +163,23 @@ const HoldItemComponent = forwardRef<HoldItemHandle, HoldItemProps>(
       if (!disableMove) {
         if (isAnchorPointTop) {
           const topTransform =
-              itemRectY.value +
-              itemRectHeight.value +
-              menuHeight +
-              styleGuide.spacing +
-              (safeAreaInsets?.bottom || 0);
-          tY = topTransform > height ? height - topTransform : itemRectY.value>0 && itemRectY.value < (safeAreaInsets?.top || 0)?(safeAreaInsets?.top || 30): itemRectY?.value < 0 ? Math.abs(itemRectY.value) +(safeAreaInsets?.top || 30)  :0;
+            itemRectY.value +
+            itemRectHeight.value +
+            menuHeight +
+            styleGuide.spacing +
+            (safeAreaInsets?.bottom || 0);
+
+          // TODO
+          console.log(itemRectY.value,
+            itemRectHeight.value,height,topTransform)
+          console.log(itemRectY.value + itemRectHeight.value)
+          tY = itemRectHeight.value > height ? height - Math.abs(itemRectY.value + itemRectHeight.value) - menuHeight - (safeAreaInsets?.top || 50) :topTransform > height ? height - topTransform : itemRectY.value > 0 && itemRectY.value < (safeAreaInsets?.top || 0)?(safeAreaInsets?.top || 30): itemRectY?.value < 0 ? Math.abs(itemRectY.value) +(safeAreaInsets?.top || 30)  :0;
         } else {
 
           const bottomTransform =
-              itemRectY.value - menuHeight - (safeAreaInsets?.top || 0);
+            itemRectY.value - menuHeight - (safeAreaInsets?.top || 0);
           tY =
-              bottomTransform < 0 ? -bottomTransform + styleGuide.spacing * 2 : 0;
+            bottomTransform < 0 ? -bottomTransform + styleGuide.spacing * 2 : 0;
         }
       }
       return tY;
@@ -270,7 +275,7 @@ const HoldItemComponent = forwardRef<HoldItemHandle, HoldItemProps>(
     const gestureEvent = useAnimatedGestureHandler<
       LongPressGestureHandlerGestureEvent | TapGestureHandlerGestureEvent,
       Context
-    >({
+      >({
       onActive: (_, context) => {
         if (canCallActivateFunctions()) {
           if (!context.didMeasureLayout) {
@@ -310,7 +315,7 @@ const HoldItemComponent = forwardRef<HoldItemHandle, HoldItemProps>(
     const overlayGestureEvent = useAnimatedGestureHandler<
       TapGestureHandlerGestureEvent,
       Context
-    >({
+      >({
       onActive: _ => {
         if (closeOnTap) state.value = CONTEXT_MENU_STATE.END;
       },
@@ -347,8 +352,8 @@ const HoldItemComponent = forwardRef<HoldItemHandle, HoldItemProps>(
         disableMove
           ? 0
           : isActive.value
-          ? withSpring(tY, SPRING_CONFIGURATION)
-          : withTiming(-0.1, { duration: HOLD_ITEM_TRANSFORM_DURATION });
+            ? withSpring(tY, SPRING_CONFIGURATION)
+            : withTiming(-0.1, { duration: HOLD_ITEM_TRANSFORM_DURATION });
 
       return {
         zIndex: 10,
@@ -417,7 +422,7 @@ const HoldItemComponent = forwardRef<HoldItemHandle, HoldItemProps>(
         default:
           return ({ children: handlerChildren }: GestureHandlerProps) => (
             <LongPressGestureHandler
-              minDurationMs={150}
+              minDurationMs={350}
               onHandlerStateChange={gestureEvent}
             >
               {handlerChildren}
@@ -440,24 +445,24 @@ const HoldItemComponent = forwardRef<HoldItemHandle, HoldItemProps>(
 
     //#region render
     return (
-        <>
-          <GestureHandler>
-            <Animated.View ref={containerRef} style={containerStyle}>
-              {children}
-            </Animated.View>
-          </GestureHandler>
+      <>
+        <GestureHandler>
+          <Animated.View ref={containerRef} style={containerStyle}>
+            {children}
+          </Animated.View>
+        </GestureHandler>
 
-          <Portal key={key} name={key}>
-            <Animated.View
-                key={key}
-                style={portalContainerStyle}
-                animatedProps={animatedPortalProps}
-            >
-              <PortalOverlay />
-              {children}
-            </Animated.View>
-          </Portal>
-        </>
+        <Portal key={key} name={key}>
+          <Animated.View
+            key={key}
+            style={portalContainerStyle}
+            animatedProps={animatedPortalProps}
+          >
+            <PortalOverlay />
+            {children}
+          </Animated.View>
+        </Portal>
+      </>
     );
     //#endregion
   }
