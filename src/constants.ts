@@ -35,7 +35,7 @@ const MENU_TRANSFORM_ORIGIN_TOLERENCE = 10;
 
 const IS_IOS = Platform.OS === 'ios';
 
-const FONT_SCALE = Dimensions.get('screen').fontScale;
+const FONT_SCALE = 1
 
 export {
   CONTEXT_MENU_STATE,

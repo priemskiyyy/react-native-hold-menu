@@ -56,6 +56,7 @@ const MenuItemComponent = ({ item, isLast }: MenuItemComponentProps) => {
         style={[styles.menuItem, borderStyles,item?.containerStyle]}
       >
         <Animated.Text
+          allowFontScaling={false}
           style={[
             item.isTitle ? styles.menuItemTitleText : styles.menuItemText,
             textColor,
