@@ -12,6 +12,7 @@ import { CONTEXT_MENU_STATE, IS_IOS } from '../../constants';
 import { BORDER_LIGHT_COLOR, BORDER_DARK_COLOR } from './constants';
 import isEqual from 'lodash.isequal';
 import { getColor } from './calculations';
+import {MenuItemHeight} from '../../utils/calculations';
 
 const ItemComponent = IS_IOS ? TouchableOpacity : GHTouchableOpacity;
 // @ts-ignore
@@ -32,6 +33,7 @@ const MenuItemComponent = ({ item, isLast }: MenuItemComponentProps) => {
     return {
       borderBottomColor,
       borderBottomWidth: isLast ? 0 : 1,
+      height: MenuItemHeight(),
     };
   }, [theme, isLast, item]);
 
