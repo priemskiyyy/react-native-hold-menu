@@ -99,7 +99,7 @@ const MenuListComponent = () => {
 
   const animatedInnerContainerStyle = useAnimatedStyle(() => {
     return {
-      backgroundColor:
+      backgroundColor:menuProps?.value?.items?.[0]?.containerStyle?.backgroundColor?menuProps?.value?.items?.[0]?.containerStyle?.backgroundColor:
         theme.value === 'light'
           ? IS_IOS
             ? 'rgba(255, 255, 255, .75)'
