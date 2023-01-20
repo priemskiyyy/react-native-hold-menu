@@ -104,6 +104,10 @@ const HoldItemComponent = forwardRef<HoldItemHandle, HoldItemProps>(
       menuAnchorPosition || 'top-right'
     );
 
+     useEffect(()=>{
+      transformOrigin.value = menuAnchorPosition || 'top-right'
+    },[menuAnchorPosition])
+    
     const key = useMemo(() => `hold-item-${nanoid()}`, []);
     const menuHeight = useMemo(() => {
       const itemsWithSeparator = items.filter(item => item.withSeparator);
