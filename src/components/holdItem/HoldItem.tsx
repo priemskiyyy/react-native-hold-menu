@@ -1,4 +1,4 @@
-import React, { forwardRef, memo, useImperativeHandle, useMemo } from 'react';
+import React, { forwardRef, memo, useImperativeHandle, useMemo, useEffect } from 'react';
 import { Keyboard, View, ViewProps } from 'react-native';
 
 //#region reanimated & gesture handler
