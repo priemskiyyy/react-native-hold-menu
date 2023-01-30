@@ -29,9 +29,8 @@ import {
 } from './constants';
 import { useInternal } from '../../hooks';
 
-const AnimatedBlurView = IS_IOS
-  ? Animated.createAnimatedComponent(BlurView)
-  : Animated.View;
+const AnimatedBlurView = Animated.createAnimatedComponent(BlurView)
+  
 
 type Context = {
   startPosition: {
