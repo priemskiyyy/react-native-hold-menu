@@ -107,7 +107,7 @@ const HoldItemComponent = forwardRef<HoldItemHandle, HoldItemProps>(
      useEffect(()=>{
       transformOrigin.value = menuAnchorPosition || 'top-right'
     },[menuAnchorPosition])
-    
+
     const key = useMemo(() => `hold-item-${nanoid()}`, []);
     const menuHeight = useMemo(() => {
       const itemsWithSeparator = items.filter(item => item.withSeparator);
@@ -172,12 +172,12 @@ const HoldItemComponent = forwardRef<HoldItemHandle, HoldItemProps>(
             itemRectHeight.value +
             menuHeight +
             styleGuide.spacing +
-            (safeAreaInsets?.bottom || 0);
+            (safeAreaInsets?.bottom || 10);
           tY = itemRectHeight.value > height ? height - Math.abs(itemRectY.value + itemRectHeight.value) - menuHeight - (safeAreaInsets?.top || 50) :topTransform > height ? height - topTransform : itemRectY.value > 0 && itemRectY.value < (safeAreaInsets?.top || 0)?(safeAreaInsets?.top || 30): itemRectY?.value < 0 ? Math.abs(itemRectY.value) +(safeAreaInsets?.top || 30)  :0;
         } else {
 
           const bottomTransform =
-            itemRectY.value - menuHeight - (safeAreaInsets?.top || 0);
+            itemRectY.value - menuHeight - (safeAreaInsets?.top || 10);
           tY =
             bottomTransform < 0 ? -bottomTransform + styleGuide.spacing * 2 : 0;
         }
