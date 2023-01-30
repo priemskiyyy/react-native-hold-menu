@@ -1,5 +1,4 @@
 import { Dimensions, Platform } from 'react-native';
-
 const HOLD_ITEM_TRANSFORM_DURATION = 150;
 const HOLD_ITEM_SCALE_DOWN_VALUE = 0.95;
 const HOLD_ITEM_SCALE_DOWN_DURATION = 210;
@@ -25,15 +24,15 @@ enum CONTEXT_MENU_STATE {
   ACTIVE,
   END,
 }
-
-const { height: WINDOW_HEIGHT, width: WINDOW_WIDTH } = Dimensions.get('screen');
+const IS_IOS = Platform.OS === 'ios';
+const { height: WINDOW_HEIGHT, width: WINDOW_WIDTH } = Dimensions.get(IS_IOS? 'screen':'window');
 
 const MENU_CONTAINER_WIDTH = 100;
 const MENU_WIDTH = (WINDOW_WIDTH * 60) / 100;
 
 const MENU_TRANSFORM_ORIGIN_TOLERENCE = 10;
 
-const IS_IOS = Platform.OS === 'ios';
+
 
 const FONT_SCALE = 1
 
