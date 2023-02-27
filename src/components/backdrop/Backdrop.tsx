@@ -29,7 +29,9 @@ import {
 } from './constants';
 import { useInternal } from '../../hooks';
 
-const AnimatedBlurView = Animated.createAnimatedComponent(BlurView)
+const AnimatedBlurView = IS_IOS
+    ? Animated.createAnimatedComponent(BlurView)
+    : Animated.View;
   
 
 type Context = {
